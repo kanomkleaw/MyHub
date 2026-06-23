@@ -97,9 +97,9 @@ function renderContent(pathname: string) {
         </>
       );
     case '/claims/new':
-      return <formContent title="Submit claim" description="Frontend starter form for a future API-connected claim workflow." />;
+      return <FormContent title="Submit claim" description="Frontend starter form for a future API-connected claim workflow." />;
     case '/claims/sample-claim':
-      return <detailContent title="Medical reimbursement" summary="THB 2,450 • submitted 11 Jun 2026" tone="warning" />;
+      return <DetailContent title="Medical reimbursement" summary="THB 2,450 • submitted 11 Jun 2026" tone="warning" />;
     case '/policies':
       return <policyListContent />;
     case '/policies/code-of-conduct':
