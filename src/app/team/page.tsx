@@ -11,159 +11,371 @@ export default function Page() {
 }
 
 function renderContent(pathname: string) {
+  // ดึงไอคอนมาใช้สำหรับตกแต่งหน้าจอต่างๆ
+  const { 
+    User, Mail, Phone, MapPin, Briefcase, Calendar, Shield, 
+    FileText, CheckCircle, Clock, AlertTriangle, Plus, Search,
+    GraduationCap, Award, BookOpen, Send, Check, X, ShieldAlert, List
+  } = require('lucide-react');
+
   switch (pathname) {
     case '/':
+      // --- หน้า Home (ยึดตามดีไซน์สวยงามที่เราทำไว้) ---
       return (
-        <>
-          <Hero
-            eyebrow="Employee dashboard"
-            title="A premium employee experience, ready to leave Power Apps"
-            description="This exported Next.js project is structured for standalone deployment, richer UI evolution, Microsoft SSO integration, and Azure-backed APIs while keeping the app's main flows recognizable."
-            actions={
-              <>
-                <Link className="button" href="/requests/new">New request</Link>
-                <Link className="button ghost" href="/claims/new">Submit claim</Link>
-              </>
-            }
-          />
-          <div className="stats-grid">
-            <StatCard label="Open requests" value="2" tone="warning" />
-            <StatCard label="Pending acknowledgments" value="1" tone="danger" />
-            <StatCard label="Training due" value="1" tone="warning" />
-            <StatCard label="Wellbeing score" value="88%" tone="success" />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+          <div style={{ backgroundColor: '#fef2f2', border: '1px solid #fca5a5', borderRadius: '0.75rem', padding: '1rem', color: '#b91c1c', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <AlertTriangle size={18} />
+            <div><strong>Requires Attention:</strong> คุณมีคอร์สเรียนกฎเกณฑ์ความปลอดภัยไซเบอร์ที่เกินกำหนดชำระ และมีนโยบายไฮบริดจ์เวิร์คใหม่ที่ต้องกดรับทราบ</div>
           </div>
-          <div className="grid-2">
-            <SurfaceCard title="Priority items" description="Critical announcements, overdue training, and policy tasks.">
-              <ListBlock
-                items={[
-                  { title: 'Hybrid work guideline refreshed', meta: 'Critical announcement • 20 Jun 2026', badge: { label: 'Critical', tone: 'danger' } },
-                  { title: 'Compliance foundation overdue', meta: 'Due today • required module', badge: { label: 'Overdue', tone: 'warning' } },
-                  { title: 'Code of conduct acknowledgment pending', meta: 'Compliance task', badge: { label: 'Pending', tone: 'info' } },
-                ]}
-              />
-            </SurfaceCard>
-            <DashboardCharts variant="employee" />
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+            <Link href="/requests/new" style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '0.75rem', padding: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', color: '#0f172a' }}>
+              <div style={{ padding: '0.75rem', backgroundColor: '#f0fdfa', borderRadius: '50%', color: '#0d9488' }}><Send size={24} /></div>
+              <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>New Request</span>
+            </Link>
+            <Link href="/claims/new" style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '0.75rem', padding: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', color: '#0f172a' }}>
+              <div style={{ padding: '0.75rem', backgroundColor: '#f0fdfa', borderRadius: '50%', color: '#0d9488' }}><FileText size={24} /></div>
+              <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Submit Claim</span>
+            </Link>
+            <Link href="/assistant" style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '0.75rem', padding: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', color: '#0f172a' }}>
+              <div style={{ padding: '0.75rem', backgroundColor: '#f0fdfa', borderRadius: '50%', color: '#0d9488' }}><Headphones size={24} /></div>
+              <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>HR Assistant</span>
+            </Link>
+            <Link href="/directory" style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '0.75rem', padding: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', color: '#0f172a' }}>
+              <div style={{ padding: '0.75rem', backgroundColor: '#f0fdfa', borderRadius: '50%', color: '#0d9488' }}><BookOpen size={24} /></div>
+              <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Directory</span>
+            </Link>
           </div>
-        </>
+        </div>
       );
+
     case '/profile':
+      // --- หน้า My Profile (จัดเรียงข้อมูลพนักงานเป็นสัดส่วนชัดเจน) ---
       return (
-        <>
-          <Hero eyebrow="Employee profile" title="Anan Kittipong" description="Senior Operations Analyst with core profile data, role metadata, and HR ownership." />
-          <div className="grid-2">
-            <SurfaceCard title="Contact information">
-              <ListBlock
-                items={[
-                  { title: 'Email', meta: 'anan.k@example.com' },
-                  { title: 'Phone', meta: '+66 81 234 5678' },
-                  { title: 'Organization unit', meta: 'Corporate Strategy' },
-                ]}
-              />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ backgroundColor: '#fff', borderRadius: '0.75rem', border: '1px solid #e2e8f0', padding: '2rem', display: 'flex', alignItems: 'center', gap: '2rem' }}>
+            <div style={{ width: '80px', height: '80px', backgroundColor: '#0284c7', color: '#fff', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyInContent: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 600 }}>AK</div>
+            <div>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>Anan Kittipong</h2>
+              <p style={{ color: '#64748b', margin: '0.25rem 0 0.5rem 0' }}>Senior Operations Analyst • Corporate Strategy</p>
+              <span style={{ backgroundColor: '#f1f5f9', color: '#334155', padding: '0.25rem 0.75rem', borderRadius: '1rem', fontSize: '0.85rem', fontWeight: 500 }}>พนักงานประจำ (Full-time)</span>
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+            <SurfaceCard title="ข้อมูลการติดต่อ">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><Mail size={16} color="#64748b" /> <span>anan.k@kkpfg.com</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><Phone size={16} color="#64748b" /> <span>+66 81 234 5678</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><MapPin size={16} color="#64748b" /> <span>อาคารสำนักงานใหญ่ กรุงเทพฯ</span></div>
+              </div>
             </SurfaceCard>
-            <SurfaceCard title="Employment details">
-              <ListBlock
-                items={[
-                  { title: 'Corporate title', meta: 'Senior Operations Analyst' },
-                  { title: 'Role', meta: 'Employee' },
-                  { title: 'HR contact', meta: 'Pimchanok S. • HR Business Partner' },
-                ]}
-              />
+            <SurfaceCard title="ข้อมูลตำแหน่งและการจ้างงาน">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><Briefcase size={16} color="#64748b" /> <span>ฝ่ายกลยุทธ์องค์กร (Corporate Strategy)</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><Calendar size={16} color="#64748b" /> <span>วันที่เริ่มงาน: 15 มีนาคม 2022</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><User size={16} color="#64748b" /> <span>ผู้บังคับบัญชา: Pimchanok S. (HRBP)</span></div>
+              </div>
             </SurfaceCard>
           </div>
-        </>
+        </div>
       );
-    case '/benefits':
-      return (
-        <>
-          <Hero eyebrow="Benefits" title="Benefit plans and entitlements" description="Card-based benefits overview with room for richer API-connected content later." />
-          <div className="grid-3">
-            <SurfaceCard title="Health coverage" description="Medical reimbursement and dependent support."><ListBlock items={[{ title: 'Annual outpatient allowance', meta: 'THB 25,000 remaining' }, { title: 'Dependent coverage', meta: '1 dependent enrolled' }]} /></SurfaceCard>
-            <SurfaceCard title="Wellness" description="Fitness and wellbeing support."><ListBlock items={[{ title: 'Gym subsidy', meta: 'THB 1,500 per month' }, { title: 'Mental wellbeing sessions', meta: '2 sessions remaining' }]} /></SurfaceCard>
-            <SurfaceCard title="Retirement & savings" description="Long-term savings support."><ListBlock items={[{ title: 'Provident fund', meta: 'Company match up to 6%' }, { title: 'Latest statement', meta: 'Available for May 2026' }]} /></SurfaceCard>
-          </div>
-        </>
-      );
+
     case '/claims':
+      // --- หน้าประวัติรายการเคลมทั้งหมด ---
       return (
-        <>
-          <Hero eyebrow="Claims" title="Reimbursement claims" description="Claim list with quick access to create, review, and extend into real workflows." actions={<Link className="button" href="/claims/new">New claim</Link>} />
-          <div className="stats-grid">
-            <StatCard label="Open claims" value="2" tone="warning" />
-            <StatCard label="Approved this month" value="1" tone="success" />
-            <StatCard label="Awaiting documents" value="1" tone="danger" />
-            <StatCard label="Paid amount" value="THB 2.4k" tone="info" />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>รายการเบิกสวัสดิการของคุณ</div>
+            <Link href="/claims/new" className="button" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Plus size={16} /> ยื่นใบเบิกเงิน</Link>
           </div>
-          <SurfaceCard title="Claim list"><ListBlock items={[{ title: 'Medical reimbursement', meta: '11 Jun 2026 • receipt review in progress', badge: { label: 'Pending', tone: 'warning' } }, { title: 'Travel expense Bangkok', meta: '06 Jun 2026 • finance approved', badge: { label: 'Approved', tone: 'success' } }]} /></SurfaceCard>
-        </>
+          <SurfaceCard title="ประวัติการเคลมเงินปี 2026">
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1rem' }}>
+                <thead>
+                  <tr style={{ borderBottom: '2px solid #e2e8f0', color: '#475569', textAlign: 'left', fontWeight: 600 }}>
+                    <th style={{ padding: '0.75rem' }}>ID รายการ</th>
+                    <th style={{ padding: '0.75rem' }}>ประเภท</th>
+                    <th style={{ padding: '0.75rem' }}>วันที่ยื่น</th>
+                    <th style={{ padding: '0.75rem' }}>ยอดเงิน</th>
+                    <th style={{ padding: '0.75rem' }}>สถานะ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
+                    <td style={{ padding: '1rem', fontWeight: 500 }}>CLM-9421</td>
+                    <td style={{ padding: '1rem' }}>ค่ารักษาพยาบาล (OPD)</td>
+                    <td style={{ padding: '1rem' }}>11 มิ.ย. 2026</td>
+                    <td style={{ padding: '1rem', fontWeight: 600 }}>THB 2,450</td>
+                    <td style={{ padding: '1rem' }}><span style={{ backgroundColor: '#fef3c7', color: '#d97706', padding: '0.25rem 0.5rem', borderRadius: '0.375rem', fontSize: '0.85rem' }}>Pending Review</span></td>
+                  </tr>
+                  <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
+                    <td style={{ padding: '1rem', fontWeight: 500 }}>CLM-9310</td>
+                    <td style={{ padding: '1rem' }}>ค่าฟิตเนสรายเดือน</td>
+                    <td style={{ padding: '1rem' }}>06 มิ.ย. 2026</td>
+                    <td style={{ padding: '1rem', fontWeight: 600 }}>THB 1,500</td>
+                    <td style={{ padding: '1rem' }}><span style={{ backgroundColor: '#dcfce7', color: '#16a34a', padding: '0.25rem 0.5rem', borderRadius: '0.375rem', fontSize: '0.85rem' }}>Approved</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </SurfaceCard>
+        </div>
       );
+
     case '/claims/new':
-      return <formContent title="Submit claim" description="Frontend starter form for a future API-connected claim workflow." />;
-    case '/claims/sample-claim':
-      return <detailContent title="Medical reimbursement" summary="THB 2,450 • submitted 11 Jun 2026" tone="warning" />;
-    case '/policies':
-      return <policyListContent />;
-    case '/policies/code-of-conduct':
-      return <detailContent title="Code of conduct" summary="Critical compliance policy requiring acknowledgment" tone="danger" />;
-    case '/training':
-      return (
-        <>
-          <Hero eyebrow="Training" title="Training assignments" description="Required learning, completion state, and future LMS integration points." />
-          <div className="grid-2">
-            <SurfaceCard title="Assignments"><ListBlock items={[{ title: 'Compliance foundation', meta: 'Due today • required', badge: { label: 'Overdue', tone: 'danger' } }, { title: 'Cybersecurity essentials', meta: 'Due in 4 days', badge: { label: 'In progress', tone: 'info' } }]} /></SurfaceCard>
-            <DashboardCharts variant="employee" />
-          </div>
-        </>
-      );
-    case '/training/compliance-foundation':
-      return <detailContent title="Compliance foundation" summary="eLearning + quiz" tone="danger" />;
-    case '/directory':
-      return <directoryContent />;
-    case '/requests':
-      return (
-        <>
-          <Hero eyebrow="Requests" title="Service requests" description="Current employee service requests with extendable workflow states." actions={<Link className="button" href="/requests/new">New request</Link>} />
-          <SurfaceCard title="My requests"><ListBlock items={[{ title: 'Employment certificate', meta: 'Document request • waiting for HR assignment', badge: { label: 'Pending', tone: 'warning' } }, { title: 'Address update', meta: 'Profile change • completed by shared services', badge: { label: 'Completed', tone: 'success' } }]} /></SurfaceCard>
-        </>
-      );
     case '/requests/new':
-      return <formContent title="Submit request" description="Service request starter form prepared for backend API integration." />;
-    case '/requests/employment-certificate':
-      return <detailContent title="Employment certificate" summary="Document request submitted 14 Jun 2026" tone="warning" />;
-    case '/assistant':
-      return <assistantContent />;
-    case '/manager':
+      // --- หน้าฟอร์มส่งข้อมูล (Claims / Requests New) ---
       return (
-        <>
-          <Hero eyebrow="Manager summary" title="Manager dashboard" description="Approvals, team risk, and action signals for people leaders." actions={<Link className="button" href="/team">Open team view</Link>} />
-          <div className="stats-grid">
-            <StatCard label="Approvals due" value="4" tone="warning" />
-            <StatCard label="Open cases" value="2" tone="info" />
-            <StatCard label="Overdue training" value="1" tone="danger" />
-            <StatCard label="Sentiment" value="Positive" tone="success" />
+        <SurfaceCard title={pathname.includes('claim') ? "ยื่นเรื่องเบิกเงินสวัสดิการใหม่" : "สร้างคำร้องบริการ HR ใหม่"}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '1.25rem' }}>
+            <div>
+              <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem', color: '#334155' }}>หัวข้อคำร้อง / เรื่องที่ต้องการติดต่อ</label>
+              <input className="input" placeholder="ระบุชื่อเรื่อง เช่น ขอเบิกค่ารักษาพยาบาลประจำเดือน" style={{ width: '100%' }} />
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem', color: '#334155' }}>หมวดหมู่หลัก</label>
+                <select className="select" style={{ width: '100%' }}>
+                  <option>สวัสดิการสุขภาพ (Medical)</option>
+                  <option>การทำงานและอุปกรณ์ (Workplace)</option>
+                  <option>เอกสารรับรอง (HR Certificates)</option>
+                </select>
+              </div>
+              <div>
+                <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem', color: '#334155' }}>จำนวนเงิน (หากเป็นใบเบิกเงิน)</label>
+                <input className="input" type="number" placeholder="0.00" style={{ width: '100%' }} />
+              </div>
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem', color: '#334155' }}>รายละเอียดเพิ่มเติม</label>
+              <textarea className="textarea" placeholder="พิมพ์รายละเอียดหรือเหตุผลความจำเป็นที่นี่..." style={{ width: '100%', minHeight: '100px' }}></textarea>
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem', color: '#334155' }}>แนบไฟล์หลักฐาน (ใบเสร็จ / เอกสารประกอบ)</label>
+              <div style={{ border: '2px dashed #cbd5e1', padding: '2rem', borderRadius: '0.5rem', textAlign: 'center', backgroundColor: '#f8fafc', color: '#64748b', cursor: 'pointer' }}>
+                <Plus size={24} style={{ margin: '0 auto 0.5rem auto' }} /> กดที่นี่เพื่ออัปโหลดไฟล์ PDF หรือรูปภาพใบเสร็จ
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+              <button className="button" style={{ flex: 1 }}>ส่งคำร้องเข้าสู่ระบบ</button>
+              <button className="button ghost" style={{ flex: 1 }}>บันทึกร่างเก็บไว้</button>
+            </div>
           </div>
-          <DashboardCharts variant="manager" />
-        </>
+        </SurfaceCard>
       );
+
+    case '/training':
+      // --- หน้า Training & Learning Portal ---
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+            <StatCard label="คอร์สที่ต้องเรียนให้จบ" value="1 คอร์ส" tone="danger" />
+            <StatCard label="คอร์สที่เรียนสำเร็จแล้ว" value="4 คอร์ส" tone="success" />
+            <StatCard label="ชั่วโมงสะสมรวม" value="12.5 ชม." tone="info" />
+          </div>
+          <SurfaceCard title="คอร์สอบรมของคุณประจำปี 2026">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', border: '1px solid #fca5a5', backgroundColor: '#fef2f2', borderRadius: '0.5rem' }}>
+                <div>
+                  <div style={{ fontWeight: 600, color: '#991b1b' }}>Cybersecurity Foundation 2026</div>
+                  <div style={{ fontSize: '0.85rem', color: '#b91c1c' }}>กำหนดส่งภายใน: วันนี้ • วิชาบังคับขององค์กร</div>
+                </div>
+                <Link href="/training/compliance-foundation" className="button" style={{ backgroundColor: '#ef4444', color: '#fff' }}>เริ่มเรียนทันที</Link>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem' }}>
+                <div>
+                  <div style={{ fontWeight: 600, color: '#0f172a' }}>Effective Time Management</div>
+                  <div style={{ fontSize: '0.85rem', color: '#64748b' }}>สถานะ: เรียนจบแล้วเมื่อ 14 พ.ค. 2026</div>
+                </div>
+                <span style={{ color: '#16a34a', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Award size={16} /> ได้รับใบเซอร์แล้ว</span>
+              </div>
+            </div>
+          </SurfaceCard>
+        </div>
+      );
+
+    case '/directory':
+      // --- หน้าค้นหารายชื่อพนักงาน (Directory) ---
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ display: 'flex', gap: '1rem', backgroundColor: '#fff', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1 }}>
+              <Search size={18} color="#94a3b8" />
+              <input placeholder="ค้นหาชื่อพนักงาน, ตำแหน่ง หรือแผนกงาน..." style={{ border: 'none', outline: 'none', width: '100%', fontSize: '0.95rem' }} />
+            </div>
+            <button className="button" style={{ padding: '0.5rem 1.5rem' }}>ค้นหา</button>
+          </div>
+          <SurfaceCard title="รายชื่อติดต่อด่วนในองค์กร">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem' }}>
+              <div style={{ padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <div style={{ fontWeight: 600 }}>Pimchanok S.</div>
+                  <div style={{ fontSize: '0.85rem', color: '#64748b' }}>HR Business Partner (ดูแลทีม Strategy)</div>
+                </div>
+                <a href="mailto:pimchanok.s@kkpfg.com" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: 500 }}>pimchanok.s@kkpfg.com</a>
+              </div>
+              <div style={{ padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <div style={{ fontWeight: 600 }}>Narin T.</div>
+                  <div style={{ fontSize: '0.85rem', color: '#64748b' }}>Benefits Manager (ดูแลงานกองทุนและสวัสดิการ)</div>
+                </div>
+                <a href="mailto:narin.t@kkpfg.com" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: 500 }}>narin.t@kkpfg.com</a>
+              </div>
+            </div>
+          </SurfaceCard>
+        </div>
+      );
+
+    case '/assistant':
+      // --- หน้า Virtual HR Assistant Stream ---
+      return (
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem' }}>
+          <SurfaceCard title="Virtual HR Assistant AI" description="ถาม-ตอบ สวัสดิการ ระเบียบข้อบังคับ และนโยบายบริษัทได้ตลอด 24 ชั่วโมง">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: '350px', overflowY: 'auto', border: '1px solid #e2e8f0', padding: '1rem', borderRadius: '0.5rem', backgroundColor: '#f8fafc', marginTop: '1rem' }}>
+              <div style={{ alignSelf: 'flex-start', backgroundColor: '#fff', padding: '0.75rem 1rem', borderRadius: '0.75rem', border: '1px solid #e2e8f0', maxWidth: '80%' }}>
+                สวัสดีค่ะคุณอนันต์ วันนี้ต้องการตรวจสอบสิทธิ์การเบิกสวัสดิการ หรือต้องการรับลิงก์ส่งคำร้องตัวไหนแจ้งบอทได้เลยนะคะ! 🤖
+              </div>
+              <div style={{ alignSelf: 'flex-end', backgroundColor: '#e0f2fe', color: '#0369a1', padding: '0.75rem 1rem', borderRadius: '0.75rem', maxWidth: '80%' }}>
+                วงเงิน OPD ของฉันในปี 2026 นี้เหลืออยู่เท่าไหร่ครับ?
+              </div>
+              <div style={{ alignSelf: 'flex-start', backgroundColor: '#fff', padding: '0.75rem 1rem', borderRadius: '0.75rem', border: '1px solid #e2e8f0', maxWidth: '80%' }}>
+                จากการตรวจสอบ วงเงินสิทธิ์การเบิกผู้ป่วยนอก (OPD) ของคุณคงเหลือ **THB 25,000** จากโควตาเต็ม THB 40,000 ค่ะ สามารถกดคลิกดูตารางแยกรายการได้ที่หน้าสวัสดิการเลยค่ะ
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+              <input className="input" placeholder="พิมพ์คำถามของคุณที่นี่..." style={{ flex: 1 }} />
+              <button className="button">ส่งคำถาม</button>
+            </div>
+          </SurfaceCard>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <SurfaceCard title="หัวข้อยอดฮิต">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.9rem' }}>
+                <button style={{ textAlign: 'left', padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '0.25rem', backgroundColor: '#fff', cursor: 'pointer' }}>• การเบิกค่าทันตกรรม</button>
+                <button style={{ textAlign: 'left', padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '0.25rem', backgroundColor: '#fff', cursor: 'pointer' }}>• การลาพักร้อนสะสม</button>
+                <button style={{ textAlign: 'left', padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '0.25rem', backgroundColor: '#fff', cursor: 'pointer' }}>• ดาวน์โหลดหนังสือรับรองเงินเดือน</button>
+              </div>
+            </SurfaceCard>
+          </div>
+        </div>
+      );
+
+    case '/manager':
     case '/team':
-      return <teamContent />;
-    case '/team/ploy-ch':
-      return <detailContent title="Ploy C." summary="Operations Analyst • Team member detail" tone="success" />;
+      // --- หน้าจอของกลุ่ม Manager Hub ---
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+            <StatCard label="รอผู้จัดการอนุมัติ (Pending)" value="2 รายการ" tone="warning" />
+            <StatCard label="จำนวนลูกทีมทั้งหมด" value="3 คน" tone="info" />
+            <StatCard label="อัตราการผ่านอบรมทีม" value="85%" tone="success" />
+            <StatCard label="วันลาพักร้อนทีมสัปดาห์นี้" value="0 คน" tone="success" />
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+            <SurfaceCard title="รายการรออนุมัติจากคุณ (Approvals Queue)">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+                <div style={{ padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem', backgroundColor: '#fff' }}>
+                  <div style={{ fontWeight: 600 }}>เบิกเงินค่าเดินทางต่างจังหวัด</div>
+                  <div style={{ fontSize: '0.85rem', color: '#64748b' }}>ผู้ยื่น: Ploy C. • ยอดเงิน: THB 3,200</div>
+                  <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
+                    <button className="button" style={{ padding: '0.25rem 0.75rem', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Check size={14} /> อนุมัติ</button>
+                    <button className="button ghost" style={{ padding: '0.25rem 0.75rem', fontSize: '0.85rem', color: '#ef4444', display: 'flex', alignItems: 'center', gap: '0.25rem' }}><X size={14} /> ปฏิเสธ</button>
+                  </div>
+                </div>
+              </div>
+            </SurfaceCard>
+            <SurfaceCard title="รายชื่อสมาชิกในทีมและสถานะ">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 1rem', borderBottom: '1px solid #f1f5f9' }}>
+                  <div><strong>Ploy C.</strong> <span style={{ color: '#64748b', fontSize: '0.85rem' }}>(Analyst)</span></div>
+                  <span style={{ color: '#16a34a', fontSize: '0.85rem', fontWeight: 500 }}>● อบรมครบถ้วน</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 1rem', borderBottom: '1px solid #f1f5f9' }}>
+                  <div><strong>Than K.</strong> <span style={{ color: '#64748b', fontSize: '0.85rem' }}>(Coordinator)</span></div>
+                  <span style={{ color: '#d97706', fontSize: '0.85rem', fontWeight: 500 }}>● มีคอร์สค้างเรียน</span>
+                </div>
+              </div>
+            </SurfaceCard>
+          </div>
+        </div>
+      );
+
     case '/hr-admin/policies':
     case '/hr-admin/announcements':
     case '/hr-admin/service-categories':
     case '/hr-admin/support-queue':
-    case '/hr-admin/tickets/ticket-1007':
-      return <operationsContent pathname={pathname} />;
+      // --- หน้าจอของกลุ่ม HR Admin Portal ---
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ fontSize: '1.2rem', fontWeight: 600, color: '#0f172a' }}>HR Administration Panel Console</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem' }}>
+            <SurfaceCard title="เคสในระบบ Support Workload ล่าสุด">
+              <div style={{ overflowX: 'auto', marginTop: '1rem' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '2px solid #e2e8f0', textAlign: 'left', fontSize: '0.9rem', color: '#475569' }}>
+                      <th style={{ padding: '0.5rem' }}>ID เคส</th>
+                      <th style={{ padding: '0.5rem' }}>ผู้ส่งเรื่อง</th>
+                      <th style={{ padding: '0.5rem' }}>เรื่องยื่น</th>
+                      <th style={{ padding: '0.5rem' }}>ความสำคัญ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ padding: '0.75rem 0.5rem', fontWeight: 500 }}>TK-1007</td>
+                      <td style={{ padding: '0.75rem 0.5rem' }}>Somchai D.</td>
+                      <td style={{ padding: '0.75rem 0.5rem' }}>สอบถามกองทุนสำรองเลี้ยงชีพ</td>
+                      <td style={{ padding: '0.75rem 0.5rem' }}><span style={{ backgroundColor: '#fee2e2', color: '#ef4444', padding: '0.1rem 0.5rem', borderRadius: '0.25rem', fontSize: '0.8rem' }}>High Escalation</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </SurfaceCard>
+            <SurfaceCard title="สรุปงานแอดมิน">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                <div>• เคสคงค้างในคิวทั้งหมด: <strong>17 เคส</strong></div>
+                <div>• ปิดเคสสำเร็จแล้ววันนี้: <strong>9 เคส</strong></div>
+                <div>• นโยบายที่รออัปเดต: <strong>3 ฉบับ</strong></div>
+              </div>
+            </SurfaceCard>
+          </div>
+        </div>
+      );
+
     case '/admin/role-mappings':
     case '/admin/hr-assignments':
     case '/admin/access-control':
     case '/admin/audit-logs':
-      return <adminContent pathname={pathname} />;
+      // --- หน้าจอของกลุ่ม Super Admin Governance Control ---
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '0.75rem', padding: '1.5rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <ShieldAlert size={36} color="#0284c7" />
+            <div>
+              <h3 style={{ margin: 0, fontWeight: 600 }}>Super Admin Security Console</h3>
+              <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.9rem', color: '#64748b' }}>ใช้ควบคุมบทบาทผู้ใช้งาน (Privileged Accounts), ระบบ Microsoft Entra ID Mappings และตรวจสอบบันทึกธุรกรรมความปลอดภัย (Audit Trails)</p>
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+            <SurfaceCard title="บัญชีผู้ใช้ที่ได้รับสิทธิ์พิเศษ (Privileged Users)">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '1rem', fontSize: '0.95rem' }}>
+                <div style={{ padding: '0.5rem', backgroundColor: '#f1f5f9', borderRadius: '0.25rem', display: 'flex', justifyContent: 'space-between' }}><span>1. Administrator Main System</span> <strong>Active</strong></div>
+                <div style={{ padding: '0.5rem', backgroundColor: '#f1f5f9', borderRadius: '0.25rem', display: 'flex', justifyContent: 'space-between' }}><span>2. HR Support Lead Account</span> <strong>Active</strong></div>
+              </div>
+            </SurfaceCard>
+            <SurfaceCard title="คำแนะนำการ Hardening สำหรับระบบจริง">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem', fontSize: '0.85rem', color: '#475569' }}>
+                <div>✔ <strong>Microsoft Entra ID Connection:</strong> แนะนำให้สลับไปใช้ NextAuth หรือระบบไลบรารี MSAL สำหรับทำระบบล็อกอินจริง</div>
+                <div>✔ <strong>Azure Endpoint Protection:</strong> ย้ายฟังก์ชันเบิกจ่ายข้อมูลหลังบ้านไปซ่อนไว้ภายใต้ระบบ API Gateway ที่ล็อกสิทธิ์ Token</div>
+              </div>
+            </SurfaceCard>
+          </div>
+        </div>
+      );
+
     default:
       return <SurfaceCard title="Route not configured">This export route is ready to be expanded.</SurfaceCard>;
   }
 }
-
 function formContent({ title, description }: { title: string; description: string }) {
   return (
     <SurfaceCard title={title} description={description}>
