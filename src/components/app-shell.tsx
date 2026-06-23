@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { Bell, Sparkles } from 'lucide-react';
+import { Bell, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
+import * as Icons from 'lucide-react'; // ดึงไอคอนทั้งหมดมาสลับใช้ไดนามิก
 import { navigationByScope, type ExportRoute } from '@/lib/data';
 
 type AppShellProps = {
@@ -12,36 +13,58 @@ export function AppShell({ route, children }: AppShellProps) {
   const navGroups = navigationByScope;
 
   return (
-    <div className="page-shell">
-      <aside className="sidebar">
-        <div className="brand">
-          <div className="brand-mark">KK</div>
+    <div className="page-shell" style={{ backgroundColor: '#f4f7f9' }}>
+      {/* ปรับสี Sidebar ให้เป็นโทนสว่างสบายตาตามตัวอย่างภาพ */}
+      <aside className="sidebar" style={{ backgroundColor: '#f8fafc', borderRight: '1px solid #e2e8f0', color: '#334155', width: '260px' }}>
+        <div className="brand" style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '1.5rem' }}>
+          <div className="brand-mark" style={{ backgroundColor: '#0284c7', color: '#fff' }}>KK</div>
           <div>
-            <div className="brand-title">KKPFG HR</div>
-            <div className="brand-subtitle">Next.js export starter</div>
+            <div className="brand-title" style={{ color: '#0f172a' }}>KKPFG HR</div>
+            <div className="brand-subtitle" style={{ color: '#64748b' }}>Next.js export starter</div>
           </div>
         </div>
 
-        {/* 🚀 ส่วนที่แก้ไข: ปรับปรุงโครงสร้าง Navigation ให้ดึงหัวข้อหมวดหมู่แยกออกมาจากลิงก์อย่างถูกต้อง */}
-        <div className="sidebar-nav" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', flex: 1, overflowY: 'auto', paddingRight: '0.5rem' }}>
+        <div className="sidebar-nav" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', flex: 1, overflowY: 'auto', padding: '1rem 0.5rem' }}>
           {navGroups.map((group) => (
             <div className="nav-section" key={group.label} style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-              {/* หัวข้อหมวดหมู่สีจางตัวพิมพ์ใหญ่ */}
-              <div className="nav-label" style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-muted, #888)', padding: '0 0.75rem', marginBottom: '0.25rem', letterSpacing: '0.05em' }}>
-                {group.label.toUpperCase()}
+              {/* หัวข้อกลุ่มย่อยสีนุ่มนวลแบบตัวอย่าง */}
+              <div className="nav-label" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#475569', padding: '0 0.75rem', marginBottom: '0.5rem' }}>
+                {group.label}
               </div>
               
-              {/* รายการเมนูในหมวดหมู่นั้นๆ */}
               {group.items.map((item) => {
-                // ตรวจสอบสถานะว่าเมนูนี้เป็นเมนูที่กำลังเปิดอยู่ (Active) หรือไม่
                 const isActive = item.href === route.href;
+                
+                // สลับแสดงผลไอคอนแบบไดนามิก ถ้าไม่มีให้ใช้ไฟล์เอกสารเริ่มต้น
+                const IconComponent = (Icons as any)[(item as any).icon || 'FileText'];
+
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
                     className={isActive ? 'nav-link active' : 'nav-link'}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '0.6rem 0.75rem',
+                      borderRadius: '0.375rem',
+                      color: isActive ? '#0284c7' : '#475569',
+                      backgroundColor: isActive ? '#e0f2fe' : 'transparent',
+                      fontWeight: isActive ? 600 : 400,
+                      textDecoration: 'none',
+                      fontSize: '0.95rem'
+                    }}
                   >
-                    {item.label}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      {IconComponent && <IconComponent size={18} strokeWidth={1.5} />}
+                      <span>{item.label}</span>
+                    </div>
+                    
+                    {/* แสดงปุ่มลูกศรสำหรับกลุ่มเมนูที่เป็น Dropdown แบบในตัวอย่าง */}
+                    {(item as any).isDropdown && (
+                      isActive ? <ChevronUp size={16} color="#94a3b8" /> : <ChevronDown size={16} color="#94a3b8" />
+                    )}
                   </Link>
                 );
               })}
@@ -49,22 +72,22 @@ export function AppShell({ route, children }: AppShellProps) {
           ))}
         </div>
 
-        <div className="sidebar-profile">
+        <div className="sidebar-profile" style={{ borderTop: '1px solid #e2e8f0', paddingTop: '1rem' }}>
           <div className="profile-card">
             <div className="profile-avatar">AK</div>
             <div>
-              <div style={{ fontWeight: 700 }}>Anan Kittipong</div>
-              <div className="brand-subtitle">Senior Operations Analyst</div>
+              <div style={{ fontWeight: 700, color: '#0f172a' }}>Anan Kittipong</div>
+              <div className="brand-subtitle" style={{ color: '#64748b' }}>Senior Operations Analyst</div>
             </div>
           </div>
         </div>
       </aside>
 
       <div className="page-main">
-        <header className="topbar">
+        <header className="topbar" style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e2e8f0' }}>
           <div>
-            <div className="topbar-title">{route.title}</div>
-            <div className="topbar-subtitle">{route.summary}</div>
+            <div className="topbar-title" style={{ color: '#0f172a' }}>{route.title}</div>
+            <div className="topbar-subtitle" style={{ color: '#64748b' }}>{route.summary}</div>
           </div>
           <div className="topbar-actions">
             <button className="button ghost" type="button">
