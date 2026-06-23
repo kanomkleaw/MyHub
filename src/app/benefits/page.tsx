@@ -3,293 +3,167 @@ import { AppShell } from '@/components/app-shell';
 import { DashboardCharts } from '@/components/dashboard-charts';
 import { Hero, ListBlock, StatCard, SurfaceCard } from '@/components/ui';
 import { routes } from '@/lib/data';
+import { PlusCircle, FileText, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 
 const route = routes["/benefits"];
 
 export default function Page() {
-  return <AppShell route={route}>{renderContent("/benefits")}</AppShell>;
-}
-
-function renderContent(pathname: string) {
-  switch (pathname) {
-    case '/':
-      return (
-        <>
-          <Hero
-            eyebrow="Employee dashboard"
-            title="A premium employee experience, ready to leave Power Apps"
-            description="This exported Next.js project is structured for standalone deployment, richer UI evolution, Microsoft SSO integration, and Azure-backed APIs while keeping the app's main flows recognizable."
-            actions={
-              <>
-                <Link className="button" href="/requests/new">New request</Link>
-                <Link className="button ghost" href="/claims/new">Submit claim</Link>
-              </>
-            }
-          />
-          <div className="stats-grid">
-            <StatCard label="Open requests" value="2" tone="warning" />
-            <StatCard label="Pending acknowledgments" value="1" tone="danger" />
-            <StatCard label="Training due" value="1" tone="warning" />
-            <StatCard label="Wellbeing score" value="88%" tone="success" />
-          </div>
-          <div className="grid-2">
-            <SurfaceCard title="Priority items" description="Critical announcements, overdue training, and policy tasks.">
-              <ListBlock
-                items={[
-                  { title: 'Hybrid work guideline refreshed', meta: 'Critical announcement • 20 Jun 2026', badge: { label: 'Critical', tone: 'danger' } },
-                  { title: 'Compliance foundation overdue', meta: 'Due today • required module', badge: { label: 'Overdue', tone: 'warning' } },
-                  { title: 'Code of conduct acknowledgment pending', meta: 'Compliance task', badge: { label: 'Pending', tone: 'info' } },
-                ]}
-              />
-            </SurfaceCard>
-            <DashboardCharts variant="employee" />
-          </div>
-        </>
-      );
-    case '/profile':
-      return (
-        <>
-          <Hero eyebrow="Employee profile" title="Anan Kittipong" description="Senior Operations Analyst with core profile data, role metadata, and HR ownership." />
-          <div className="grid-2">
-            <SurfaceCard title="Contact information">
-              <ListBlock
-                items={[
-                  { title: 'Email', meta: 'anan.k@example.com' },
-                  { title: 'Phone', meta: '+66 81 234 5678' },
-                  { title: 'Organization unit', meta: 'Corporate Strategy' },
-                ]}
-              />
-            </SurfaceCard>
-            <SurfaceCard title="Employment details">
-              <ListBlock
-                items={[
-                  { title: 'Corporate title', meta: 'Senior Operations Analyst' },
-                  { title: 'Role', meta: 'Employee' },
-                  { title: 'HR contact', meta: 'Pimchanok S. • HR Business Partner' },
-                ]}
-              />
-            </SurfaceCard>
-          </div>
-        </>
-      );
-    case '/benefits':
-      return (
-        <>
-          <Hero eyebrow="Benefits" title="Benefit plans and entitlements" description="Card-based benefits overview with room for richer API-connected content later." />
-          <div className="grid-3">
-            <SurfaceCard title="Health coverage" description="Medical reimbursement and dependent support."><ListBlock items={[{ title: 'Annual outpatient allowance', meta: 'THB 25,000 remaining' }, { title: 'Dependent coverage', meta: '1 dependent enrolled' }]} /></SurfaceCard>
-            <SurfaceCard title="Wellness" description="Fitness and wellbeing support."><ListBlock items={[{ title: 'Gym subsidy', meta: 'THB 1,500 per month' }, { title: 'Mental wellbeing sessions', meta: '2 sessions remaining' }]} /></SurfaceCard>
-            <SurfaceCard title="Retirement & savings" description="Long-term savings support."><ListBlock items={[{ title: 'Provident fund', meta: 'Company match up to 6%' }, { title: 'Latest statement', meta: 'Available for May 2026' }]} /></SurfaceCard>
-          </div>
-        </>
-      );
-    case '/claims':
-      return (
-        <>
-          <Hero eyebrow="Claims" title="Reimbursement claims" description="Claim list with quick access to create, review, and extend into real workflows." actions={<Link className="button" href="/claims/new">New claim</Link>} />
-          <div className="stats-grid">
-            <StatCard label="Open claims" value="2" tone="warning" />
-            <StatCard label="Approved this month" value="1" tone="success" />
-            <StatCard label="Awaiting documents" value="1" tone="danger" />
-            <StatCard label="Paid amount" value="THB 2.4k" tone="info" />
-          </div>
-          <SurfaceCard title="Claim list"><ListBlock items={[{ title: 'Medical reimbursement', meta: '11 Jun 2026 • receipt review in progress', badge: { label: 'Pending', tone: 'warning' } }, { title: 'Travel expense Bangkok', meta: '06 Jun 2026 • finance approved', badge: { label: 'Approved', tone: 'success' } }]} /></SurfaceCard>
-        </>
-      );
-    case '/claims/new':
-      return <FormContent title="Submit claim" description="Frontend starter form for a future API-connected claim workflow." />;
-    case '/claims/sample-claim':
-      return <DetailContent title="Medical reimbursement" summary="THB 2,450 • submitted 11 Jun 2026" tone="warning" />;
-    case '/policies':
-      return <PolicyListContent />;
-    case '/policies/code-of-conduct':
-      return <DetailContent title="Code of conduct" summary="Critical compliance policy requiring acknowledgment" tone="danger" />;
-    case '/training':
-      return (
-        <>
-          <Hero eyebrow="Training" title="Training assignments" description="Required learning, completion state, and future LMS integration points." />
-          <div className="grid-2">
-            <SurfaceCard title="Assignments"><ListBlock items={[{ title: 'Compliance foundation', meta: 'Due today • required', badge: { label: 'Overdue', tone: 'danger' } }, { title: 'Cybersecurity essentials', meta: 'Due in 4 days', badge: { label: 'In progress', tone: 'info' } }]} /></SurfaceCard>
-            <DashboardCharts variant="employee" />
-          </div>
-        </>
-      );
-    case '/training/compliance-foundation':
-      return <DetailContent title="Compliance foundation" summary="eLearning + quiz" tone="danger" />;
-    case '/directory':
-      return <DirectoryContent />;
-    case '/requests':
-      return (
-        <>
-          <Hero eyebrow="Requests" title="Service requests" description="Current employee service requests with extendable workflow states." actions={<Link className="button" href="/requests/new">New request</Link>} />
-          <SurfaceCard title="My requests"><ListBlock items={[{ title: 'Employment certificate', meta: 'Document request • waiting for HR assignment', badge: { label: 'Pending', tone: 'warning' } }, { title: 'Address update', meta: 'Profile change • completed by shared services', badge: { label: 'Completed', tone: 'success' } }]} /></SurfaceCard>
-        </>
-      );
-    case '/requests/new':
-      return <FormContent title="Submit request" description="Service request starter form prepared for backend API integration." />;
-    case '/requests/employment-certificate':
-      return <DetailContent title="Employment certificate" summary="Document request submitted 14 Jun 2026" tone="warning" />;
-    case '/assistant':
-      return <AssistantContent />;
-    case '/manager':
-      return (
-        <>
-          <Hero eyebrow="Manager summary" title="Manager dashboard" description="Approvals, team risk, and action signals for people leaders." actions={<Link className="button" href="/team">Open team view</Link>} />
-          <div className="stats-grid">
-            <StatCard label="Approvals due" value="4" tone="warning" />
-            <StatCard label="Open cases" value="2" tone="info" />
-            <StatCard label="Overdue training" value="1" tone="danger" />
-            <StatCard label="Sentiment" value="Positive" tone="success" />
-          </div>
-          <DashboardCharts variant="manager" />
-        </>
-      );
-    case '/team':
-      return <TeamContent />;
-    case '/team/ploy-ch':
-      return <DetailContent title="Ploy C." summary="Operations Analyst • Team member detail" tone="success" />;
-    case '/hr-admin/policies':
-    case '/hr-admin/announcements':
-    case '/hr-admin/service-categories':
-    case '/hr-admin/support-queue':
-    case '/hr-admin/tickets/ticket-1007':
-      return <OperationsContent pathname={pathname} />;
-    case '/admin/role-mappings':
-    case '/admin/hr-assignments':
-    case '/admin/access-control':
-    case '/admin/audit-logs':
-      return <AdminContent pathname={pathname} />;
-    default:
-      return <SurfaceCard title="Route not configured">This export route is ready to be expanded.</SurfaceCard>;
-  }
-}
-
-function formContent({ title, description }: { title: string; description: string }) {
   return (
-    <SurfaceCard title={title} description={description}>
-      <div className="form-grid">
-        <input className="input" placeholder="Subject" />
-        <select className="select" defaultValue="general">
-          <option value="general">General category</option>
-          <option value="benefits">Benefits</option>
-          <option value="documents">Documents</option>
-        </select>
-        <textarea className="textarea" placeholder="Describe the request"></textarea>
-        <div className="button-row">
-          <button className="button" type="button">Submit</button>
-          <button className="button ghost" type="button">Save draft</button>
+    <AppShell route={route}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        
+        {/* 1. Header & Call to Action */}
+        <Hero
+          eyebrow="Benefits & Entitlements"
+          title="สวัสดิการและสิทธิ์การเบิกจ่ายของคุณ"
+          description="ตรวจสอบวงเงินคงเหลือ ประวัติการส่งเคลมเงิน และสิทธิประโยชน์ต่างๆ ของคุณได้ครบจบในที่เดียว"
+          actions={
+            <Link className="button" href="/claims/new" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <PlusCircle size={16} /> ยื่นเรื่องเคลมใหม่
+            </Link>
+          }
+        />
+
+        {/* 2. Stat Cards ภาพรวมเร็วๆ */}
+        <div className="stats-grid">
+          <StatCard label="วงเงินคงเหลือ (OPD)" value="THB 25,000" tone="success" />
+          <StatCard label="รายการเคลมเดือนนี้" value="2 รายการ" tone="info" />
+          <StatCard label="อยู่ระหว่างพิจารณา" value="1 รายการ" tone="warning" />
+          <StatCard label="สิทธิ์ฟิตเนสประจำเดือน" value="ใช้แล้ว" tone="success" />
         </div>
-      </div>
-    </SurfaceCard>
-  );
-}
 
-function detailContent({ title, summary, tone }: { title: string; summary: string; tone: 'info' | 'success' | 'warning' | 'danger' }) {
-  return (
-    <div className="grid-2">
-      <SurfaceCard title={title} description={summary}>
-        <ListBlock items={[{ title: 'Status', meta: summary, badge: { label: tone === 'danger' ? 'Critical' : tone === 'warning' ? 'Pending' : 'Active', tone } }, { title: 'Owner', meta: 'Operations or HR reviewer' }, { title: 'Next step', meta: 'Prepared for future workflow wiring' }]} />
-      </SurfaceCard>
-      <SurfaceCard title="Timeline" description="Starter timeline block for future API events.">
-        <ListBlock items={[{ title: 'Submitted by employee', meta: '11 Jun 2026 • 09:18' }, { title: 'Assigned to operations', meta: '11 Jun 2026 • 10:03' }, { title: 'Awaiting action', meta: 'Current step' }]} />
-      </SurfaceCard>
-    </div>
-  );
-}
+        {/* 3. ส่วนแสดงกราฟเปรียบเทียบวงเงิน */}
+        <div className="grid-2">
+          <SurfaceCard 
+            title="กราฟวิเคราะห์การใช้งานสวัสดิการปี 2026" 
+            description="สัดส่วนวงเงินที่ใช้ไป (Used) เทียบกับวงเงินคงเหลือ (Remaining)"
+          >
+            <div style={{ height: '280px', marginTop: '1rem' }}>
+              {/* ใช้ Component กราฟของโปรเจกต์มาเรนเดอร์ในโหมดวิเคราะห์ของ Employee */}
+              <DashboardCharts variant="employee" />
+            </div>
+          </SurfaceCard>
 
-function policyListContent() {
-  return (
-    <>
-      <Hero eyebrow="Policies" title="Policy library" description="Critical and acknowledged policy views with room for secure document services later." />
-      <SurfaceCard title="Policies">
-        <ListBlock items={[{ title: 'Code of conduct', meta: 'Compliance • updated 18 Jun 2026', badge: { label: 'Pending', tone: 'danger' } }, { title: 'Travel and expense policy', meta: 'Finance • updated 10 Jun 2026', badge: { label: 'Acknowledged', tone: 'success' } }, { title: 'Hybrid work handbook', meta: 'Workplace • updated 20 Jun 2026', badge: { label: 'Critical', tone: 'warning' } }]} />
-      </SurfaceCard>
-    </>
-  );
-}
+          {/* 4. สรุปโควตาสิทธิประโยชน์แบบละเอียด */}
+          <SurfaceCard title="รายละเอียดสิทธิ์และวงเงินคงเหลือ" description="แจกแจงสิทธิ์แยกตามหมวดหมู่การรักษาและไลฟ์สไตล์">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+              
+              <div style={{ padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem', backgroundColor: '#fff' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, marginBottom: '0.5rem' }}>
+                  <span>ค่ารักษาพยาบาลผู้ป่วยนอก (OPD)</span>
+                  <span style={{ color: '#0284c7' }}>THB 25,000 / 40,000</span>
+                </div>
+                <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
+                  <div style={{ width: '62.5%', height: '100%', backgroundColor: '#0284c7' }}></div>
+                </div>
+                <div style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.25rem' }}>ใช้ไปแล้ว 37.5% (คงเหลือ THB 25,000)</div>
+              </div>
 
-function directoryContent() {
-  return (
-    <SurfaceCard title="People and HR contacts" description="Directory starter ready for Entra profile data or API-backed people services.">
-      <ListBlock items={[{ title: 'Pimchanok S.', meta: 'HR Business Partner • pimchanok.s@example.com' }, { title: 'Narin T.', meta: 'Benefits Operations • narin.t@example.com' }, { title: 'Kanya P.', meta: 'Learning & Development • kanya.p@example.com' }]} />
-    </SurfaceCard>
-  );
-}
+              <div style={{ padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem', backgroundColor: '#fff' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, marginBottom: '0.5rem' }}>
+                  <span>เงินสนับสนุนฟิตเนส & สุขภาพ</span>
+                  <span style={{ color: '#16a34a' }}>THB 1,500 / 1,500</span>
+                </div>
+                <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
+                  <div style={{ width: '100%', height: '100%', backgroundColor: '#16a34a' }}></div>
+                </div>
+                <div style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.25rem' }}>โควตารอบปัจจุบันเต็มจำนวน (ได้รับสนับสนุนรายเดือน)</div>
+              </div>
 
-function assistantContent() {
-  return (
-    <div className="chat-layout">
-      <SurfaceCard title="Virtual HR Assistant" description="Conversational shell prepared for real assistant integrations later.">
-        <div className="chat-stream">
-          <div className="chat-row assistant"><div className="mini-avatar">AI</div><div className="chat-bubble">Hello! I can help with benefits, policies, training, claims, and HR routing.</div></div>
-          <div className="chat-row user"><div className="chat-bubble">How do I submit a medical claim?</div><div className="mini-avatar">AK</div></div>
-          <div className="chat-row assistant"><div className="mini-avatar">AI</div><div className="chat-bubble">Open the claims flow, choose Medical, attach context, and submit. This exported app is ready for API-backed assistant services later.</div></div>
+              <div style={{ padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem', backgroundColor: '#fff' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, marginBottom: '0.5rem' }}>
+                  <span>วงเงินดูแลสุขภาพจิต (Mental Wellbeing)</span>
+                  <span style={{ color: '#ea580c' }}>2 / 4 เซสชันค้างอยู่</span>
+                </div>
+                <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
+                  <div style={{ width: '50%', height: '100%', backgroundColor: '#ea580c' }}></div>
+                </div>
+                <div style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.25rem' }}>ใช้บริการไปแล้ว 2 เซสชัน คงเหลือสิทธิ์อีก 2 ครั้ง</div>
+              </div>
+
+            </div>
+          </SurfaceCard>
         </div>
-      </SurfaceCard>
-      <SurfaceCard title="Quick topics" description="Extend with real knowledge, routing, or copilot services.">
-        <ListBlock items={[{ title: 'Benefits & insurance', meta: 'Health, dental, reimbursement' }, { title: 'Time off & leave', meta: 'PTO, sick leave, special leave' }, { title: 'Company policies', meta: 'Guidelines and procedures' }]} />
-      </SurfaceCard>
-    </div>
-  );
-}
 
-function teamContent() {
-  return (
-    <>
-      <Hero eyebrow="Manager hub" title="Team overview" description="Roster, approvals, compliance, and sentiment in a more deployable web-app structure." />
-      <div className="stats-grid">
-        <StatCard label="Team size" value="3" tone="info" />
-        <StatCard label="Pending approvals" value="2" tone="warning" />
-        <StatCard label="Overdue items" value="1" tone="danger" />
-        <StatCard label="Sentiment" value="Positive" tone="success" />
-      </div>
-      <div className="grid-2">
-        <SurfaceCard title="Team roster"><ListBlock items={[{ title: 'Ploy C.', meta: 'Operations Analyst', badge: { label: 'On track', tone: 'success' } }, { title: 'Than K.', meta: 'Project Coordinator', badge: { label: 'Needs review', tone: 'warning' } }, { title: 'Mint R.', meta: 'Business Analyst', badge: { label: 'On leave', tone: 'info' } }]} /></SurfaceCard>
-        <DashboardCharts variant="manager" />
-      </div>
-    </>
-  );
-}
+        {/* 5. Claim Transactions Table ตารางประวัติการเคลมและสถานะ */}
+        <SurfaceCard 
+          title="ประวัติการส่งเคลมสวัสดิการล่าสุด (Claim Transactions)" 
+          description="ติดตามสถานะ ใบเสร็จ และรายละเอียดการเบิกเงินเรียลไทม์"
+        >
+          <div style={{ overflowX: 'auto', marginTop: '1rem' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.95rem' }}>
+              <thead>
+                <tr style={{ borderBottom: '2px solid #e2e8f0', color: '#475569', fontWeight: 600 }}>
+                  <th style={{ padding: '0.75rem 1rem' }}>เลขที่คำร้อง</th>
+                  <th style={{ padding: '0.75rem 1rem' }}>ประเภทรายการ</th>
+                  <th style={{ padding: '0.75rem 1rem' }}>วันที่ยื่นเรื่อง</th>
+                  <th style={{ padding: '0.75rem 1rem' }}>จำนวนเงิน</th>
+                  <th style={{ padding: '0.75rem 1rem' }}>สถานะ</th>
+                  <th style={{ padding: '0.75rem 1rem' }}>หมายเหตุ</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                <tr style={{ borderBottom: '1px solid #e2e8f0', hover: { backgroundColor: '#f8fafc' } }}>
+                  <td style={{ padding: '1rem', fontWeight: 500, color: '#0f172a' }}>CLM-2026-004</td>
+                  <td style={{ padding: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <FileText size={16} color="#64748b" />
+                      <span>Medical Reimbursement (ค่าหวัดอักเสบ)</span>
+                    </div>
+                  </td>
+                  <td style={{ padding: '1rem', color: '#64748b' }}>11 มิ.ย. 2026</td>
+                  <td style={{ padding: '1rem', fontWeight: 600 }}>THB 2,450</td>
+                  <td style={{ padding: '1rem' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', padding: '0.25rem 0.5rem', borderRadius: '0.375rem', fontSize: '0.85rem', fontWeight: 500, backgroundColor: '#fef3c7', color: '#d97706' }}>
+                      <Clock size={14} /> Pending Review
+                    </span>
+                  </td>
+                  <td style={{ padding: '1rem', color: '#64748b', fontSize: '0.85rem' }}>รอฝ่ายบุคคลตรวจสอบใบเสร็จ</td>
+                </tr>
 
-function operationsContent({ pathname }: { pathname: string }) {
-  const titles: Record<string, string> = {
-    '/hr-admin/policies': 'Policy administration',
-    '/hr-admin/announcements': 'Announcement queue',
-    '/hr-admin/service-categories': 'Service category setup',
-    '/hr-admin/support-queue': 'Support queue',
-    '/hr-admin/tickets/ticket-1007': 'Ticket details',
-  };
+                <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
+                  <td style={{ padding: '1rem', fontWeight: 500, color: '#0f172a' }}>CLM-2026-003</td>
+                  <td style={{ padding: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <FileText size={16} color="#64748b" />
+                      <span>Gym & Fitness Monthly Subsidy</span>
+                    </div>
+                  </td>
+                  <td style={{ padding: '1rem', color: '#64748b' }}>06 มิ.ย. 2026</td>
+                  <td style={{ padding: '1rem', fontWeight: 600 }}>THB 1,500</td>
+                  <td style={{ padding: '1rem' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', padding: '0.25rem 0.5rem', borderRadius: '0.375rem', fontSize: '0.85rem', fontWeight: 500, backgroundColor: '#dcfce7', color: '#16a34a' }}>
+                      <CheckCircle size={14} /> Approved & Paid
+                    </span>
+                  </td>
+                  <td style={{ padding: '1rem', color: '#64748b', fontSize: '0.85rem' }}>โอนเงินเข้าบัญชีพนักงานแล้ว</td>
+                </tr>
 
-  return (
-    <>
-      <Hero eyebrow="HR operations" title={titles[pathname]} description="Admin-ready operational screen for a standalone Next.js deployment path." />
-      <div className="grid-2">
-        <SurfaceCard title="Operational workload"><ListBlock items={[{ title: 'Open items', meta: '17 active records', badge: { label: 'In progress', tone: 'warning' } }, { title: 'Escalations', meta: '3 high-priority items', badge: { label: 'Critical', tone: 'danger' } }, { title: 'Resolved today', meta: '9 completed items', badge: { label: 'Resolved', tone: 'success' } }]} /></SurfaceCard>
-        <DashboardCharts variant="operations" />
-      </div>
-    </>
-  );
-}
+                <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
+                  <td style={{ padding: '1rem', fontWeight: 500, color: '#0f172a' }}>CLM-2026-001</td>
+                  <td style={{ padding: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <FileText size={16} color="#64748b" />
+                      <span>Dental Care (ขูดหินปูนประจำปี)</span>
+                    </div>
+                  </td>
+                  <td style={{ padding: '1rem', color: '#64748b' }}>20 พ.ค. 2026</td>
+                  <td style={{ padding: '1rem', fontWeight: 600 }}>THB 1,200</td>
+                  <td style={{ padding: '1rem' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', padding: '0.25rem 0.5rem', borderRadius: '0.375rem', fontSize: '0.85rem', fontWeight: 500, backgroundColor: '#dcfce7', color: '#16a34a' }}>
+                      <CheckCircle size={14} /> Approved & Paid
+                    </span>
+                  </td>
+                  <td style={{ padding: '1rem', color: '#64748b', fontSize: '0.85rem' }}>ปิดเคสสมบูรณ์</td>
+                </tr>
 
-function adminContent({ pathname }: { pathname: string }) {
-  const titles: Record<string, string> = {
-    '/admin/role-mappings': 'Role mappings',
-    '/admin/hr-assignments': 'HR assignments',
-    '/admin/access-control': 'Access control',
-    '/admin/audit-logs': 'Audit logs',
-  };
-
-  return (
-    <>
-      <Hero eyebrow="Super admin" title={titles[pathname]} description="Governance-friendly admin views prepared for secure expansion with Microsoft SSO and Azure APIs." />
-      <div className="grid-2">
-        <SurfaceCard title="Control summary">
-          <ListBlock items={[{ title: 'Privileged users', meta: '14 mapped users', badge: { label: 'Reviewed', tone: 'success' } }, { title: 'Pending changes', meta: '3 access requests', badge: { label: 'Pending', tone: 'warning' } }, { title: 'Audit coverage', meta: 'Export and role events tracked', badge: { label: 'Secured', tone: 'info' } }]} />
+              </tbody>
+            </table>
+          </div>
         </SurfaceCard>
-        <SurfaceCard title="Deployment guidance" description="Recommended next steps for production hardening.">
-          <ListBlock items={[{ title: 'Microsoft Entra ID', meta: 'Use NextAuth or MSAL for SSO' }, { title: 'Azure backend', meta: 'Move data and workflow APIs behind secure endpoints' }, { title: 'Authorization', meta: 'Add route middleware and server-side session checks' }]} />
-        </SurfaceCard>
+
       </div>
-    </>
+    </AppShell>
   );
 }
