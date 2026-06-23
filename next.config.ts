@@ -1,13 +1,15 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  reactStrictMode: false, // ปิดโหมดเข้มงวดของ React 19 ชั่วคราว
+  reactStrictMode: false,
   typescript: {
-    ignoreBuildErrors: true, // ข้าม TypeScript ข้อผิดพลาดทั้งหมด
+    ignoreBuildErrors: true,
   },
   eslint: {
-    ignoreDuringBuilds: true, // ข้ามการเช็กโครงสร้าง Syntax
+    ignoreDuringBuilds: true,
   },
+  // 🚀 เพิ่มคำสั่งนี้เพื่อบังคับให้ทุกหน้าข้ามขั้นตอน Prerendering (Static Generation) ตอน Build ชั่วคราว
+  output: 'standalone',
 };
 
 export default nextConfig;
