@@ -5,7 +5,7 @@ export const navigationByScope = [
       { href: '/', label: 'Home', icon: 'Home' },
       { href: '/profile', label: 'My Profile', icon: 'User' },
       { href: '/benefits', label: 'Benefits', icon: 'Heart' },
-      { href: '/claims', label: 'Claims' },
+      { href: '/claims', label: 'Claims', icon: 'FileText' },
     ],
   },
   {
