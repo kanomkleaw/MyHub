@@ -22,20 +22,32 @@ export function AppShell({ route, children }: AppShellProps) {
           </div>
         </div>
 
-        {navGroups.map((group) => (
-          <div className="nav-section" key={group.label}>
-            <div className="nav-label">{group.label}</div>
-            {group.items.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={item.href === route.href ? 'nav-link active' : 'nav-link'}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        ))}
+        {/* 🚀 ส่วนที่แก้ไข: ปรับปรุงโครงสร้าง Navigation ให้ดึงหัวข้อหมวดหมู่แยกออกมาจากลิงก์อย่างถูกต้อง */}
+        <div className="sidebar-nav" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', flex: 1, overflowY: 'auto', paddingRight: '0.5rem' }}>
+          {navGroups.map((group) => (
+            <div className="nav-section" key={group.label} style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+              {/* หัวข้อหมวดหมู่สีจางตัวพิมพ์ใหญ่ */}
+              <div className="nav-label" style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-muted, #888)', padding: '0 0.75rem', marginBottom: '0.25rem', letterSpacing: '0.05em' }}>
+                {group.label.toUpperCase()}
+              </div>
+              
+              {/* รายการเมนูในหมวดหมู่นั้นๆ */}
+              {group.items.map((item) => {
+                // ตรวจสอบสถานะว่าเมนูนี้เป็นเมนูที่กำลังเปิดอยู่ (Active) หรือไม่
+                const isActive = item.href === route.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={isActive ? 'nav-link active' : 'nav-link'}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
+        </div>
 
         <div className="sidebar-profile">
           <div className="profile-card">
