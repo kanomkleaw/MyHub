@@ -4,10 +4,10 @@ import { DashboardCharts } from '@/components/dashboard-charts';
 import { Hero, ListBlock, StatCard, SurfaceCard } from '@/components/ui';
 import { routes } from '@/lib/data';
 
-const route = routes["/admin/hr-assignments"];
+const route = routes["/admin/access-control"];
 
 export default function Page() {
-  return <AppShell route={route}>{renderContent("/admin/hr-assignments")}</AppShell>;
+  return <AppShell route={route}>{renderContent("/admin/access-control")}</AppShell>;
 }
 
 function renderContent(pathname: string) {
@@ -97,13 +97,13 @@ function renderContent(pathname: string) {
         </>
       );
     case '/claims/new':
-      return <formContent title="Submit claim" description="Frontend starter form for a future API-connected claim workflow." />;
+      return <FormContent title="Submit claim" description="Frontend starter form for a future API-connected claim workflow." />;
     case '/claims/sample-claim':
-      return <detailContent title="Medical reimbursement" summary="THB 2,450 • submitted 11 Jun 2026" tone="warning" />;
+      return <DetailContent title="Medical reimbursement" summary="THB 2,450 • submitted 11 Jun 2026" tone="warning" />;
     case '/policies':
-      return <policyListContent />;
+      return <PolicyListContent />;
     case '/policies/code-of-conduct':
-      return <detailContent title="Code of conduct" summary="Critical compliance policy requiring acknowledgment" tone="danger" />;
+      return <DetailContent title="Code of conduct" summary="Critical compliance policy requiring acknowledgment" tone="danger" />;
     case '/training':
       return (
         <>
@@ -115,9 +115,9 @@ function renderContent(pathname: string) {
         </>
       );
     case '/training/compliance-foundation':
-      return <detailContent title="Compliance foundation" summary="eLearning + quiz" tone="danger" />;
+      return <DetailContent title="Compliance foundation" summary="eLearning + quiz" tone="danger" />;
     case '/directory':
-      return <directoryContent />;
+      return <DirectoryContent />;
     case '/requests':
       return (
         <>
@@ -126,11 +126,11 @@ function renderContent(pathname: string) {
         </>
       );
     case '/requests/new':
-      return <formContent title="Submit request" description="Service request starter form prepared for backend API integration." />;
+      return <FormContent title="Submit request" description="Service request starter form prepared for backend API integration." />;
     case '/requests/employment-certificate':
-      return <detailContent title="Employment certificate" summary="Document request submitted 14 Jun 2026" tone="warning" />;
+      return <DetailContent title="Employment certificate" summary="Document request submitted 14 Jun 2026" tone="warning" />;
     case '/assistant':
-      return <assistantContent />;
+      return <AssistantContent />;
     case '/manager':
       return (
         <>
@@ -145,26 +145,26 @@ function renderContent(pathname: string) {
         </>
       );
     case '/team':
-      return <teamContent />;
+      return <TeamContent />;
     case '/team/ploy-ch':
-      return <detailContent title="Ploy C." summary="Operations Analyst • Team member detail" tone="success" />;
+      return <DetailContent title="Ploy C." summary="Operations Analyst • Team member detail" tone="success" />;
     case '/hr-admin/policies':
     case '/hr-admin/announcements':
     case '/hr-admin/service-categories':
     case '/hr-admin/support-queue':
     case '/hr-admin/tickets/ticket-1007':
-      return <operationsContent pathname={pathname} />;
+      return <OperationsContent pathname={pathname} />;
     case '/admin/role-mappings':
     case '/admin/hr-assignments':
     case '/admin/access-control':
     case '/admin/audit-logs':
-      return <adminContent pathname={pathname} />;
+      return <AdminContent pathname={pathname} />;
     default:
       return <SurfaceCard title="Route not configured">This export route is ready to be expanded.</SurfaceCard>;
   }
 }
 
-function formContent({ title, description }: { title: string; description: string }) {
+function FormContent({ title, description }: { title: string; description: string }) {
   return (
     <SurfaceCard title={title} description={description}>
       <div className="form-grid">
@@ -184,7 +184,7 @@ function formContent({ title, description }: { title: string; description: strin
   );
 }
 
-function detailContent({ title, summary, tone }: { title: string; summary: string; tone: 'info' | 'success' | 'warning' | 'danger' }) {
+function DetailContent({ title, summary, tone }: { title: string; summary: string; tone: 'info' | 'success' | 'warning' | 'danger' }) {
   return (
     <div className="grid-2">
       <SurfaceCard title={title} description={summary}>
@@ -197,7 +197,7 @@ function detailContent({ title, summary, tone }: { title: string; summary: strin
   );
 }
 
-function policyListContent() {
+function PolicyListContent() {
   return (
     <>
       <Hero eyebrow="Policies" title="Policy library" description="Critical and acknowledged policy views with room for secure document services later." />
@@ -208,7 +208,7 @@ function policyListContent() {
   );
 }
 
-function directoryContent() {
+function DirectoryContent() {
   return (
     <SurfaceCard title="People and HR contacts" description="Directory starter ready for Entra profile data or API-backed people services.">
       <ListBlock items={[{ title: 'Pimchanok S.', meta: 'HR Business Partner • pimchanok.s@example.com' }, { title: 'Narin T.', meta: 'Benefits Operations • narin.t@example.com' }, { title: 'Kanya P.', meta: 'Learning & Development • kanya.p@example.com' }]} />
@@ -216,7 +216,7 @@ function directoryContent() {
   );
 }
 
-function assistantContent() {
+function AssistantContent() {
   return (
     <div className="chat-layout">
       <SurfaceCard title="Virtual HR Assistant" description="Conversational shell prepared for real assistant integrations later.">
@@ -233,7 +233,7 @@ function assistantContent() {
   );
 }
 
-function teamContent() {
+function TeamContent() {
   return (
     <>
       <Hero eyebrow="Manager hub" title="Team overview" description="Roster, approvals, compliance, and sentiment in a more deployable web-app structure." />
@@ -251,7 +251,7 @@ function teamContent() {
   );
 }
 
-function operationsContent({ pathname }: { pathname: string }) {
+function OperationsContent({ pathname }: { pathname: string }) {
   const titles: Record<string, string> = {
     '/hr-admin/policies': 'Policy administration',
     '/hr-admin/announcements': 'Announcement queue',
@@ -271,7 +271,7 @@ function operationsContent({ pathname }: { pathname: string }) {
   );
 }
 
-function adminContent({ pathname }: { pathname: string }) {
+function AdminContent({ pathname }: { pathname: string }) {
   const titles: Record<string, string> = {
     '/admin/role-mappings': 'Role mappings',
     '/admin/hr-assignments': 'HR assignments',
