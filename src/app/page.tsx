@@ -97,13 +97,13 @@ function renderContent(pathname: string) {
         </>
       );
     case '/claims/new':
-      return <formContent title="Submit claim" description="Frontend starter form for a future API-connected claim workflow." />;
+      return <FormContent title="Submit claim" description="Frontend starter form for a future API-connected claim workflow." />;
     case '/claims/sample-claim':
-      return <detailContent title="Medical reimbursement" summary="THB 2,450 • submitted 11 Jun 2026" tone="warning" />;
+      return <DetailContent title="Medical reimbursement" summary="THB 2,450 • submitted 11 Jun 2026" tone="warning" />;
     case '/policies':
-      return <policyListContent />;
+      return <PolicyListContent />;
     case '/policies/code-of-conduct':
-      return <detailContent title="Code of conduct" summary="Critical compliance policy requiring acknowledgment" tone="danger" />;
+      return <DetailContent title="Code of conduct" summary="Critical compliance policy requiring acknowledgment" tone="danger" />;
     case '/training':
       return (
         <>
@@ -115,9 +115,9 @@ function renderContent(pathname: string) {
         </>
       );
     case '/training/compliance-foundation':
-      return <detailContent title="Compliance foundation" summary="eLearning + quiz" tone="danger" />;
+      return <DetailContent title="Compliance foundation" summary="eLearning + quiz" tone="danger" />;
     case '/directory':
-      return <directoryContent />;
+      return <DirectoryContent />;
     case '/requests':
       return (
         <>
@@ -126,11 +126,11 @@ function renderContent(pathname: string) {
         </>
       );
     case '/requests/new':
-      return <formContent title="Submit request" description="Service request starter form prepared for backend API integration." />;
+      return <FormContent title="Submit request" description="Service request starter form prepared for backend API integration." />;
     case '/requests/employment-certificate':
-      return <detailContent title="Employment certificate" summary="Document request submitted 14 Jun 2026" tone="warning" />;
+      return <DetailContent title="Employment certificate" summary="Document request submitted 14 Jun 2026" tone="warning" />;
     case '/assistant':
-      return <assistantContent />;
+      return <AssistantContent />;
     case '/manager':
       return (
         <>
@@ -145,20 +145,20 @@ function renderContent(pathname: string) {
         </>
       );
     case '/team':
-      return <teamContent />;
+      return <TeamContent />;
     case '/team/ploy-ch':
-      return <detailContent title="Ploy C." summary="Operations Analyst • Team member detail" tone="success" />;
+      return <DetailContent title="Ploy C." summary="Operations Analyst • Team member detail" tone="success" />;
     case '/hr-admin/policies':
     case '/hr-admin/announcements':
     case '/hr-admin/service-categories':
     case '/hr-admin/support-queue':
     case '/hr-admin/tickets/ticket-1007':
-      return <operationsContent pathname={pathname} />;
+      return <OperationsContent pathname={pathname} />;
     case '/admin/role-mappings':
     case '/admin/hr-assignments':
     case '/admin/access-control':
     case '/admin/audit-logs':
-      return <adminContent pathname={pathname} />;
+      return <AdminContent pathname={pathname} />;
     default:
       return <SurfaceCard title="Route not configured">This export route is ready to be expanded.</SurfaceCard>;
   }
