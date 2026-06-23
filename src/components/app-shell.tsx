@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Bell, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
-import * as Icons from 'lucide-react'; // ดึงไอคอนทั้งหมดมาสลับใช้ไดนามิก
+import * as Icons from 'lucide-react'; // ดึงไอคอนทั้งหมดมาเลือกใช้แบบไดนามิกตามข้อมูลใน data.ts
 import { navigationByScope, type ExportRoute } from '@/lib/data';
 
 type AppShellProps = {
@@ -14,7 +14,7 @@ export function AppShell({ route, children }: AppShellProps) {
 
   return (
     <div className="page-shell" style={{ backgroundColor: '#f4f7f9' }}>
-      {/* ปรับสี Sidebar ให้เป็นโทนสว่างสบายตาตามตัวอย่างภาพ */}
+      {/* ปรับแต่ง Sidebar ให้เป็นโทนสว่าง สะอาด สบายตา มินิมอล */}
       <aside className="sidebar" style={{ backgroundColor: '#f8fafc', borderRight: '1px solid #e2e8f0', color: '#334155', width: '260px' }}>
         <div className="brand" style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '1.5rem' }}>
           <div className="brand-mark" style={{ backgroundColor: '#0284c7', color: '#fff' }}>KK</div>
@@ -24,10 +24,11 @@ export function AppShell({ route, children }: AppShellProps) {
           </div>
         </div>
 
+        {/* เมนูแบบ Compact วางระยะห่างและไอคอนให้สบายตาตามแบบ */}
         <div className="sidebar-nav" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', flex: 1, overflowY: 'auto', padding: '1rem 0.5rem' }}>
           {navGroups.map((group) => (
             <div className="nav-section" key={group.label} style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-              {/* หัวข้อกลุ่มย่อยสีนุ่มนวลแบบตัวอย่าง */}
+              {/* ชื่อกลุ่มย่อย เช่น My workspace, Services */}
               <div className="nav-label" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#475569', padding: '0 0.75rem', marginBottom: '0.5rem' }}>
                 {group.label}
               </div>
@@ -35,7 +36,7 @@ export function AppShell({ route, children }: AppShellProps) {
               {group.items.map((item) => {
                 const isActive = item.href === route.href;
                 
-                // สลับแสดงผลไอคอนแบบไดนามิก ถ้าไม่มีให้ใช้ไฟล์เอกสารเริ่มต้น
+                // จับคู่ชื่อไอคอนจากสตริงใน data.ts ให้เป็น Component จริง
                 const IconComponent = (Icons as any)[(item as any).icon || 'FileText'];
 
                 return (
@@ -61,7 +62,7 @@ export function AppShell({ route, children }: AppShellProps) {
                       <span>{item.label}</span>
                     </div>
                     
-                    {/* แสดงปุ่มลูกศรสำหรับกลุ่มเมนูที่เป็น Dropdown แบบในตัวอย่าง */}
+                    {/* ลูกศรเปิด-ปิดสำหรับเมนูดร็อปดาวน์ด้านล่าง */}
                     {(item as any).isDropdown && (
                       isActive ? <ChevronUp size={16} color="#94a3b8" /> : <ChevronDown size={16} color="#94a3b8" />
                     )}
