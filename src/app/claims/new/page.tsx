@@ -147,7 +147,7 @@ function renderContent(pathname: string) {
     case '/team':
       return <TeamContent />;
     case '/team/ploy-ch':
-      return <detailContent title="Ploy C." summary="Operations Analyst • Team member detail" tone="success" />;
+      return <DetailContent title="Ploy C." summary="Operations Analyst • Team member detail" tone="success" />;
     case '/hr-admin/policies':
     case '/hr-admin/announcements':
     case '/hr-admin/service-categories':
