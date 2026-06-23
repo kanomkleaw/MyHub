@@ -1,169 +1,141 @@
-import Link from 'next/link';
 import { AppShell } from '@/components/app-shell';
-import { DashboardCharts } from '@/components/dashboard-charts';
-import { Hero, ListBlock, StatCard, SurfaceCard } from '@/components/ui';
 import { routes } from '@/lib/data';
-import { PlusCircle, FileText, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { Heart, Stethoscope, DollarSign, TrendingUp, CheckCircle } from 'lucide-react';
 
-const route = routes["/benefits"];
+const route = routes['/benefits'];
 
-export default function Page() {
+export default function BenefitsPage() {
   return (
     <AppShell route={route}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', paddingBottom: '2rem' }}>
         
-        {/* 1. Header & Call to Action */}
-        <Hero
-          eyebrow="Benefits & Entitlements"
-          title="สวัสดิการและสิทธิ์การเบิกจ่ายของคุณ"
-          description="ตรวจสอบวงเงินคงเหลือ ประวัติการส่งเคลมเงิน และสิทธิประโยชน์ต่างๆ ของคุณได้ครบจบในที่เดียว"
-          actions={
-            <Link className="button" href="/claims/new" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <PlusCircle size={16} /> ยื่นเรื่องเคลมใหม่
-            </Link>
-          }
-        />
-
-        {/* 2. Stat Cards ภาพรวมเร็วๆ */}
-        <div className="stats-grid">
-          <StatCard label="วงเงินคงเหลือ (OPD)" value="THB 25,000" tone="success" />
-          <StatCard label="รายการเคลมเดือนนี้" value="2 รายการ" tone="info" />
-          <StatCard label="อยู่ระหว่างพิจารณา" value="1 รายการ" tone="warning" />
-          <StatCard label="สิทธิ์ฟิตเนสประจำเดือน" value="ใช้แล้ว" tone="success" />
+        {/* --- Top Stat Cards --- */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+          <StatProgressCard icon={<Heart size={20} color="#0d9488" />} title="Medical Deductible" value="$1,250" total="/$3,000" percent="41%" />
+          <StatProgressCard icon={<Stethoscope size={20} color="#0d9488" />} title="Out of Pocket Max" value="$2,800" total="/$8,000" percent="35%" />
+          <StatSimpleCard icon={<DollarSign size={20} color="#b45309" />} title="FSA Balance" value="$1,960" subtitle="Healthcare FSA remaining" iconBg="#fef3c7" />
+          <StatSimpleCard icon={<TrendingUp size={20} color="#475569" />} title="401(k) Balance" value="$52,340" subtitle="8% contribution + 6% match" iconBg="#f1f5f9" />
         </div>
 
-        {/* 3. ส่วนแสดงกราฟเปรียบเทียบวงเงิน */}
-        <div className="grid-2">
-          <SurfaceCard 
-            title="กราฟวิเคราะห์การใช้งานสวัสดิการปี 2026" 
-            description="สัดส่วนวงเงินที่ใช้ไป (Used) เทียบกับวงเงินคงเหลือ (Remaining)"
-          >
-            <div style={{ height: '280px', marginTop: '1rem' }}>
-              {/* ใช้ Component กราฟของโปรเจกต์มาเรนเดอร์ในโหมดวิเคราะห์ของ Employee */}
-              <DashboardCharts variant="employee" />
-            </div>
-          </SurfaceCard>
-
-          {/* 4. สรุปโควตาสิทธิประโยชน์แบบละเอียด */}
-          <SurfaceCard title="รายละเอียดสิทธิ์และวงเงินคงเหลือ" description="แจกแจงสิทธิ์แยกตามหมวดหมู่การรักษาและไลฟ์สไตล์">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
-              
-              <div style={{ padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem', backgroundColor: '#fff' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, marginBottom: '0.5rem' }}>
-                  <span>ค่ารักษาพยาบาลผู้ป่วยนอก (OPD)</span>
-                  <span style={{ color: '#0284c7' }}>THB 25,000 / 40,000</span>
-                </div>
-                <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
-                  <div style={{ width: '62.5%', height: '100%', backgroundColor: '#0284c7' }}></div>
-                </div>
-                <div style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.25rem' }}>ใช้ไปแล้ว 37.5% (คงเหลือ THB 25,000)</div>
-              </div>
-
-              <div style={{ padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem', backgroundColor: '#fff' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, marginBottom: '0.5rem' }}>
-                  <span>เงินสนับสนุนฟิตเนส & สุขภาพ</span>
-                  <span style={{ color: '#16a34a' }}>THB 1,500 / 1,500</span>
-                </div>
-                <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
-                  <div style={{ width: '100%', height: '100%', backgroundColor: '#16a34a' }}></div>
-                </div>
-                <div style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.25rem' }}>โควตารอบปัจจุบันเต็มจำนวน (ได้รับสนับสนุนรายเดือน)</div>
-              </div>
-
-              <div style={{ padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem', backgroundColor: '#fff' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, marginBottom: '0.5rem' }}>
-                  <span>วงเงินดูแลสุขภาพจิต (Mental Wellbeing)</span>
-                  <span style={{ color: '#ea580c' }}>2 / 4 เซสชันค้างอยู่</span>
-                </div>
-                <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
-                  <div style={{ width: '50%', height: '100%', backgroundColor: '#ea580c' }}></div>
-                </div>
-                <div style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.25rem' }}>ใช้บริการไปแล้ว 2 เซสชัน คงเหลือสิทธิ์อีก 2 ครั้ง</div>
-              </div>
-
-            </div>
-          </SurfaceCard>
+        {/* --- Fake Tabs --- */}
+        <div style={{ display: 'flex', backgroundColor: '#f8fafc', padding: '0.5rem', borderRadius: '0.75rem', border: '1px solid #e2e8f0', gap: '0.5rem' }}>
+          <Tab active>♡ Medical</Tab>
+          <Tab>🦷 Dental</Tab>
+          <Tab>👁 Vision</Tab>
+          <Tab>⛨ Life</Tab>
+          <Tab>🔗 FSA</Tab>
+          <Tab>📈 401(k)</Tab>
         </div>
 
-        {/* 5. Claim Transactions Table ตารางประวัติการเคลมและสถานะ */}
-        <SurfaceCard 
-          title="ประวัติการส่งเคลมสวัสดิการล่าสุด (Claim Transactions)" 
-          description="ติดตามสถานะ ใบเสร็จ และรายละเอียดการเบิกเงินเรียลไทม์"
-        >
-          <div style={{ overflowX: 'auto', marginTop: '1rem' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.95rem' }}>
-              <thead>
-                <tr style={{ borderBottom: '2px solid #e2e8f0', color: '#475569', fontWeight: 600 }}>
-                  <th style={{ padding: '0.75rem 1rem' }}>เลขที่คำร้อง</th>
-                  <th style={{ padding: '0.75rem 1rem' }}>ประเภทรายการ</th>
-                  <th style={{ padding: '0.75rem 1rem' }}>วันที่ยื่นเรื่อง</th>
-                  <th style={{ padding: '0.75rem 1rem' }}>จำนวนเงิน</th>
-                  <th style={{ padding: '0.75rem 1rem' }}>สถานะ</th>
-                  <th style={{ padding: '0.75rem 1rem' }}>หมายเหตุ</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-                <tr style={{ borderBottom: '1px solid #e2e8f0', hover: { backgroundColor: '#f8fafc' } }}>
-                  <td style={{ padding: '1rem', fontWeight: 500, color: '#0f172a' }}>CLM-2026-004</td>
-                  <td style={{ padding: '1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <FileText size={16} color="#64748b" />
-                      <span>Medical Reimbursement (ค่าหวัดอักเสบ)</span>
-                    </div>
-                  </td>
-                  <td style={{ padding: '1rem', color: '#64748b' }}>11 มิ.ย. 2026</td>
-                  <td style={{ padding: '1rem', fontWeight: 600 }}>THB 2,450</td>
-                  <td style={{ padding: '1rem' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', padding: '0.25rem 0.5rem', borderRadius: '0.375rem', fontSize: '0.85rem', fontWeight: 500, backgroundColor: '#fef3c7', color: '#d97706' }}>
-                      <Clock size={14} /> Pending Review
-                    </span>
-                  </td>
-                  <td style={{ padding: '1rem', color: '#64748b', fontSize: '0.85rem' }}>รอฝ่ายบุคคลตรวจสอบใบเสร็จ</td>
-                </tr>
+        {/* --- Main Details Grid --- */}
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem' }}>
+          
+          {/* Left: Active Plan Details */}
+          <div style={{ backgroundColor: '#fff', borderRadius: '0.75rem', border: '1px solid #e2e8f0', padding: '1.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem' }}>
+              <div>
+                <h3 style={{ fontWeight: 600, fontSize: '1.1rem', color: '#0f172a' }}>Premium Health Plan</h3>
+                <p style={{ color: '#64748b', fontSize: '0.9rem' }}>BlueCross BlueShield</p>
+              </div>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', backgroundColor: '#f0fdfa', color: '#0d9488', border: '1px solid #ccfbf1', padding: '0.25rem 0.75rem', borderRadius: '1rem', fontSize: '0.85rem', fontWeight: 500 }}>
+                <CheckCircle size={14} /> Active
+              </span>
+            </div>
 
-                <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
-                  <td style={{ padding: '1rem', fontWeight: 500, color: '#0f172a' }}>CLM-2026-003</td>
-                  <td style={{ padding: '1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <FileText size={16} color="#64748b" />
-                      <span>Gym & Fitness Monthly Subsidy</span>
-                    </div>
-                  </td>
-                  <td style={{ padding: '1rem', color: '#64748b' }}>06 มิ.ย. 2026</td>
-                  <td style={{ padding: '1rem', fontWeight: 600 }}>THB 1,500</td>
-                  <td style={{ padding: '1rem' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', padding: '0.25rem 0.5rem', borderRadius: '0.375rem', fontSize: '0.85rem', fontWeight: 500, backgroundColor: '#dcfce7', color: '#16a34a' }}>
-                      <CheckCircle size={14} /> Approved & Paid
-                    </span>
-                  </td>
-                  <td style={{ padding: '1rem', color: '#64748b', fontSize: '0.85rem' }}>โอนเงินเข้าบัญชีพนักงานแล้ว</td>
-                </tr>
+            <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
+              <div style={{ flex: 1, backgroundColor: '#f8fafc', padding: '1rem', borderRadius: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ color: '#475569', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>👥 Coverage Level</span>
+                <span style={{ fontWeight: 500, color: '#0f172a' }}>Employee + Family</span>
+              </div>
+              <div style={{ flex: 1, backgroundColor: '#f8fafc', padding: '1rem', borderRadius: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ color: '#475569', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>📅 Effective Date</span>
+                {/* อัปเดตข้อมูลเป็นปี 2026 ตามบริบทปัจจุบัน */}
+                <span style={{ fontWeight: 500, color: '#0f172a' }}>2026-01-01</span>
+              </div>
+            </div>
 
-                <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
-                  <td style={{ padding: '1rem', fontWeight: 500, color: '#0f172a' }}>CLM-2026-001</td>
-                  <td style={{ padding: '1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <FileText size={16} color="#64748b" />
-                      <span>Dental Care (ขูดหินปูนประจำปี)</span>
-                    </div>
-                  </td>
-                  <td style={{ padding: '1rem', color: '#64748b' }}>20 พ.ค. 2026</td>
-                  <td style={{ padding: '1rem', fontWeight: 600 }}>THB 1,200</td>
-                  <td style={{ padding: '1rem' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', padding: '0.25rem 0.5rem', borderRadius: '0.375rem', fontSize: '0.85rem', fontWeight: 500, backgroundColor: '#dcfce7', color: '#16a34a' }}>
-                      <CheckCircle size={14} /> Approved & Paid
-                    </span>
-                  </td>
-                  <td style={{ padding: '1rem', color: '#64748b', fontSize: '0.85rem' }}>ปิดเคสสมบูรณ์</td>
-                </tr>
-
-              </tbody>
-            </table>
+            <h4 style={{ fontWeight: 600, color: '#0f172a', marginBottom: '1rem' }}>Annual Limits</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <ProgressBar label="Individual Deductible" current="$1,250" total="$3,000" percent="41%" />
+              <ProgressBar label="Out of Pocket Maximum" current="$2,800" total="$8,000" percent="35%" />
+            </div>
           </div>
-        </SurfaceCard>
 
+          {/* Right: Copays */}
+          <div style={{ backgroundColor: '#fff', borderRadius: '0.75rem', border: '1px solid #e2e8f0', padding: '1.5rem' }}>
+            <h3 style={{ fontWeight: 600, fontSize: '1.1rem', color: '#0f172a', marginBottom: '0.25rem' }}>Copays</h3>
+            <p style={{ color: '#64748b', fontSize: '0.9rem', marginBottom: '1.5rem' }}>Your cost per visit</p>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <CopayRow label="Primary Care Visit" price="$25" />
+              <CopayRow label="Specialist Visit" price="$50" />
+              <CopayRow label="Emergency Room" price="$150" />
+            </div>
+          </div>
+
+        </div>
       </div>
     </AppShell>
+  );
+}
+
+// --- Helper Components for Benefits Page ---
+
+function StatProgressCard({ icon, title, value, total, percent }: any) {
+  return (
+    <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '0.75rem', padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div style={{ backgroundColor: '#f0fdfa', padding: '0.75rem', borderRadius: '0.5rem' }}>{icon}</div>
+      <div style={{ flex: 1 }}>
+        <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '0.25rem' }}>{title}</div>
+        <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>{value} <span style={{ fontSize: '0.85rem', fontWeight: 400, color: '#94a3b8' }}>{total}</span></div>
+        <div style={{ width: '100%', height: '4px', backgroundColor: '#e2e8f0', borderRadius: '2px', overflow: 'hidden' }}>
+          <div style={{ width: percent, height: '100%', backgroundColor: '#0d9488' }}></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StatSimpleCard({ icon, title, value, subtitle, iconBg }: any) {
+  return (
+    <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '0.75rem', padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div style={{ backgroundColor: iconBg, padding: '0.75rem', borderRadius: '0.5rem' }}>{icon}</div>
+      <div>
+        <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '0.25rem' }}>{title}</div>
+        <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a' }}>{value}</div>
+        <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.25rem' }}>{subtitle}</div>
+      </div>
+    </div>
+  );
+}
+
+function Tab({ active, children }: any) {
+  return (
+    <div style={{ flex: 1, textAlign: 'center', padding: '0.5rem', backgroundColor: active ? '#fff' : 'transparent', borderRadius: '0.5rem', boxShadow: active ? '0 1px 2px rgba(0,0,0,0.05)' : 'none', fontWeight: active ? 600 : 500, color: active ? '#0f172a' : '#64748b', fontSize: '0.9rem', cursor: 'pointer' }}>
+      {children}
+    </div>
+  );
+}
+
+function ProgressBar({ label, current, total, percent }: any) {
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.95rem' }}>
+        <span style={{ color: '#475569' }}>{label}</span>
+        <span style={{ fontWeight: 600, color: '#0f172a' }}>{current} <span style={{ color: '#94a3b8', fontWeight: 400 }}>/ {total}</span></span>
+      </div>
+      <div style={{ width: '100%', height: '8px', backgroundColor: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
+        <div style={{ width: percent, height: '100%', backgroundColor: '#0d9488' }}></div>
+      </div>
+    </div>
+  );
+}
+
+function CopayRow({ label, price }: any) {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem', backgroundColor: '#f8fafc' }}>
+      <span style={{ color: '#475569', fontWeight: 500 }}>{label}</span>
+      <span style={{ fontWeight: 600, color: '#0f172a' }}>{price}</span>
+    </div>
   );
 }
